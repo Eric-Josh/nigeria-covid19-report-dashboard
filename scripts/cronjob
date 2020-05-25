@@ -1,0 +1,1 @@
+00 06 * * * /home/joshua/Desktop/py/covid19-dashboard/scripts/automate_schema.sh >> job.log 2>&1

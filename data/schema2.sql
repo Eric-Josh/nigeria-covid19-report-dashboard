@@ -27,3 +27,5 @@ update nig_state_affected a
 		a.deaths=b.deaths;
 
 
+
+

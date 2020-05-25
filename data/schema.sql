@@ -39,6 +39,10 @@ update nig_state_affected_tmp set confirm_cases = CONVERT(REPLACE(REPLACE(confir
 -- create transaction table
 create table nig_state_affected as select * from nig_state_affected_tmp;
 
+-- create transaction history table to get newly added records
+create table nig_state_affected_history as select * from nig_state_affected;
+ALTER TABLE `nig_state_affected_history` DROP `X`, DROP `Y`;
+
 -- set data types back to int
 -- alter table nig_state_affected change `confirm_cases` `confirm_cases` int(11) not null;
 -- alter table nig_state_affected change `on_admission` `on_admission` int(11) not null;
@@ -69,3 +73,28 @@ ignore 1 lines;
 update nig_state_affected a 
 	join nig_state_gps b on (a.state=b.state)
 	set a.X=b.lng, a.Y=b.lat;
+
+-- create triggers on update
+DELIMITER //
+CREATE TRIGGER nig_state_affected_trig BEFORE UPDATE
+ON nig_state_affected
+FOR EACH ROW
+BEGIN
+insert into nig_state_affected_history (
+	state,
+	confirm_cases,
+	on_admission,
+	discharged,
+	deaths,
+	id)
+select 	
+	state,
+	confirm_cases,
+	on_admission,
+	discharged,
+	deaths,
+	id
+  FROM nig_state_affected e
+  WHERE e.id = new.id;
+END //
+

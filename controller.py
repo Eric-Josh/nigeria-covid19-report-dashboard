@@ -1,6 +1,6 @@
 from flask import Flask, redirect, url_for, render_template 
-import numpy as np  # useful for many scientific computing in Python
-import pandas as pd # primary data structure library
+import numpy as np  
+import pandas as pd 
 import folium
 import mysql.connector
 

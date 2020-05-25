@@ -20,8 +20,8 @@ f.writerow(['States Affected', 'No. of Cases (Lab Confirmed)','No. of Cases (on 
 
 # Create for loop to print out all state data
 for state_data in state_data_list_items[0:]:
-	#print(state_data.prettify())
-	#pull content out of tags
+	# print(state_data.prettify())
+	# pull content out of tags
 	# state = state_data.text
 	state = [th.text.rstrip() for th in state_data.find_all('td')]
 	# print(state)
